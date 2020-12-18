@@ -1,0 +1,5 @@
+django>=3.0,<4.0
+django-widget-tweaks
+pandas
+numpy
+scipy

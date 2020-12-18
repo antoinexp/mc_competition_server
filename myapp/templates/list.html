@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Markov Chains - Competition server</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <style>
+        .demo-card-wide.mdl-card {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .demo-card-wide.mdl-card__title {}
+
+        .demo-card-wide.mdl-card__actions {
+            width: 100%
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- List of uploaded documents -->
+
+    <div style="width:80%; margin: auto;">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Leaderboard</h2>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="mdl-data-table__cell--non-numeric">Team Name</th>
+                            <th>Score 1</th>
+                            <th>Score 2</th>
+                            <th class="mdl-data-table__cell--non-numeric">Last Submission</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if documents %}
+                        {% for document in documents %}
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">{{document.team }}</td>
+                            <td>{{document.max_score1|floatformat:4 }}</td>
+                            <td>{{document.max_score2|floatformat:4 }}</td>
+                            <td class="mdl-data-table__cell--non-numeric">{{ document.last_date }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- Upload form. Note enctype attribute! -->
+
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Upload</h2>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+
+
+                <div class="md-content ck-content" data-controller="challenge-overview"
+                    data-action="resize@window->challenge-overview#showTOC">
+
+
+                    <p style="text-align: center; margin: 20px">
+                        <strong>
+                            Thank you for your participation! <br />
+                            Feel free to continue the competition <a
+                                href="https://www.aicrowd.com/challenges/com-516-markov-chains-and-algorithmic-applications">on
+                                Aicrowd</a>!
+                        </strong>
+                    </p>
+
+                    <p>You will now be able test your algorithm on larger datasets! Instead of using randomly generated
+                        data, you will
+                        now use two csv files containing real data. However, these datasets are larger than what you
+                        used for the
+                        handouts, and you may have to adapt your code to make it scale with the number of cities!&nbsp;
+                    </p>
+
+                    <p>You will be evaluated on two datasets, pay attention to the fact that the score is computed with
+                        a
+                        different
+                        parameter <b>λ&nbsp;</b>in each case. Don't forget to submit your results for both challenges!
+                    </p>
+
+                    <p>Good luck!</p>
+
+                    <p>&nbsp;</p>
+
+                    <h2 id="datasets" class="mt-2">💾 Datasets</h2>
+
+                    <p>For this challenge, you need to load a csv file to process the cities.</p>
+
+                    <p><b>For the first part of the challenge: (small dataset)&nbsp;</b><a
+                            href="https://raw.githubusercontent.com/itewsh/mc/main/dataset1.csv">dataset_small_challenge.csv</a>&nbsp;
+                    </p>
+
+                    <p>For this first challenge, you will have to set&nbsp; <u><b>λ=1.0</b></u></p>
+
+                    <p>&nbsp;</p>
+
+                    <p><b>For the second part of the challenge: (large dataset)</b>&nbsp;<a
+                            href="https://raw.githubusercontent.com/itewsh/mc/main/dataset2.csv">dataset_large_challenge.csv</a>
+                    </p>
+
+                    <p>For this second challenge, you will have to set&nbsp; <u><b>λ=1.25</b></u></p>
+
+                    <p>&nbsp;</p>
+
+                    <h2 id="submission" class="mt-2">🚀 Submission</h2>
+
+                    <p>Yiu can attempt as many submissions as you want. Don't forget to put the correct name of your
+                        team!&nbsp;</p>
+
+                    <p>You need to provide a dataset where you specify which cities are included in your result or not:
+                    </p>
+
+                    <table border="1" cellpadding="1" cellspacing="1" style="width: 500px;">
+                        <tbody>
+                            <tr>
+                                <td>id</td>
+                                <td>include</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>&nbsp;</p>
+
+                    <p><b>Example for the small dataset :&nbsp;</b><a
+                            href="https://raw.githubusercontent.com/itewsh/mc/main/example_solution_1.csv">result_dataset_small_challenge.csv</a>
+                    </p>
+
+                    <p><b>Example for the large dataset :</b>&nbsp;<a
+                            href="https://raw.githubusercontent.com/itewsh/mc/main/example_solution_2.csv">result_dataset_large_challenge.csv</a>
+                    </p>
+
+                    <p>&nbsp;</p>
+
+                    <h2 id="evaluation-criteria" class="mt-2">🖊 Evaluation Criteria</h2>
+
+                    <p>The score is evaluated based on the two results, but the large dataset will mainly be taken into
+                        account to
+                        assess the winner!&nbsp;</p>
+
+                    <p>&nbsp;</p>
+                    {% load widget_tweaks %}
+                    <h2 id="datasets" class="mt-2">Upload</h2>
+
+                    <form action='{% url "my-view" %}' method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <strong>{{ message }}</strong>
+                        <p>{{ form.non_field_errors }}</p>
+                        <p>
+                            {% render_field form.team class+="mdc-list" %}
+                        </p>
+
+                        <p>{{ form.challenge_id }}</p>
+
+                        <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+                        <p>
+                            {{ form.docfile.errors }}
+                            {% render_field form.docfile %}
+                        </p>
+
+                        <p style="margin:auto; text-align: center; "><input type="submit" value="Upload"
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" />
+                        </p>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
